@@ -1,0 +1,9 @@
+[package]
+name = "orange"
+version = "0.1.0"
+authors = ["othelarian <le.maitre.killian@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+clap = "2.33.0"
+#directories = "2.0.2"
