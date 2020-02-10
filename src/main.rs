@@ -31,6 +31,8 @@ fn main() {
             .arg(Arg::with_name("PROJECT_NAME")
                 .help("name of the project")))
         //
+        .subcommand(SubCommand::with_name("install")
+            .about("TODO check and download dependencies"))
         //
         .subcommand(SubCommand::with_name("remove")
             .about("TODO remove a given dependency to the project"))
@@ -44,6 +46,7 @@ fn main() {
         ("add", _) => println!("call add (TODO)"),
         ("build", _) => println!("call build (TODO)"),
         ("init", Some(sub_a)) => init(sub_a),
+        ("install", _) => println!("call install (TODO)"),
         ("remove", _) => println!("call remove (TODO)"),
         ("serve", _) => println!("call serve (TODO)"),
         _ => {
