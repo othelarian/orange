@@ -2,53 +2,56 @@ extern crate clap;
 
 use clap::{Arg, App, SubCommand};
 
-use orange::init;
+use orange::{init, pour, press};
 
 fn main() {
     let matches = App::new("Orange CLI")
         .version("0.1.0")
         .author("othelarian")
         //
+        .subcommand(SubCommand::with_name("crop")
+            .about("TODO add a fruit to the juice"))
         //
-        .subcommand(SubCommand::with_name("add")
-            .about("TODO add a dependency to the project"))
+        .subcommand(SubCommand::with_name("init")
+            .about("initialize a directory to become a new juice")
+            .arg(Arg::with_name("JUICE_NAME")
+                .help("name of the project")))
         //
-        .subcommand(SubCommand::with_name("build")
-            .about("TODO build the project")
+        .subcommand(SubCommand::with_name("harvest")
+            .about("TODO check and download fruits, do also an update if necessary"))
+        //
+        .subcommand(SubCommand::with_name("pour")
+            .about("TODO serving the juice to your web browser")
             //
             .arg(Arg::with_name("env")
                 .short("e")
                 .long("env")
                 .value_name("ENV_FILE")
                 .help("load the given env file")
-                .takes_value(true))
-            //
-            //
-            )
+                .takes_value(true)))
         //
-        .subcommand(SubCommand::with_name("init")
-            .about("TODO initialize a directory to become a new orange project")
-            .arg(Arg::with_name("PROJECT_NAME")
-                .help("name of the project")))
-        //
-        .subcommand(SubCommand::with_name("install")
-            .about("TODO check and download dependencies"))
+        .subcommand(SubCommand::with_name("press")
+            .about("TODO pressing the juice from the recipe")
+            //
+            .arg(Arg::with_name("env")
+                .short("e")
+                .long("env")
+                .value_name("ENV_FILE")
+                .help("load the given env file")
+                .takes_value(true)))
         //
         .subcommand(SubCommand::with_name("remove")
-            .about("TODO remove a given dependency to the project"))
-        //
-        .subcommand(SubCommand::with_name("serve")
-            .about("TODO start a dev server"))
+            .about("TODO remove a given fruit from the juice"))
         //
         .get_matches();
     //
     match matches.subcommand() {
-        ("add", _) => println!("call add (TODO)"),
-        ("build", _) => println!("call build (TODO)"),
+        ("crop", _) => println!("call add (TODO)"),
         ("init", Some(sub_a)) => init(sub_a),
-        ("install", _) => println!("call install (TODO)"),
+        ("harvest", _) => println!("call prepare (TODO)"),
+        ("pour", Some(sub_a)) => pour(sub_a),
+        ("press", Some(sub_a)) => press(sub_a),
         ("remove", _) => println!("call remove (TODO)"),
-        ("serve", _) => println!("call serve (TODO)"),
         _ => {
             println!("---------------------------------------------------------------");
             println!("Welcome to orange CLI! Please use --help to see what you can do");

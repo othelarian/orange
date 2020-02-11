@@ -7,3 +7,4 @@ edition = "2018"
 [dependencies]
 clap = "2.33.0"
 #directories = "2.0.2"
+#basic-http-server = "0.8.1"
