@@ -49,7 +49,7 @@ fn main() {
         ("crop", _) => println!("call add (TODO)"),
         ("init", Some(sub_a)) => init(sub_a),
         ("harvest", _) => println!("call prepare (TODO)"),
-        ("pour", Some(sub_a)) => pour(sub_a),
+        ("pour", Some(sub_a)) => { pour(sub_a); },
         ("press", Some(sub_a)) => press(sub_a),
         ("remove", _) => println!("call remove (TODO)"),
         _ => {

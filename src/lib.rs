@@ -1,6 +1,7 @@
 extern crate clap;
 
 use clap::ArgMatches;
+use micro_http_server::MicroHTTP;
 use std::env;
 use std::fs::{self, File};
 use std::io::Write;
@@ -35,6 +36,15 @@ pub fn pour(_args: &ArgMatches) {
     //
     println!("trying to serve (TODO)");
     //
+    let addr = "127.0.0.1:4213";
+    //
+    let _server = MicroHTTP::new(addr.into())
+        .expect("Impossible to find a glass to pour in");
+    //
+    println!("Pouring on {}", addr);
+    //
+    //let _conn =
+    //
 }
 
 pub fn press(_args: &ArgMatches) {
@@ -52,13 +62,6 @@ enum OrangeError<'a> {
 
 
 
-fn check_juice_name(_name: &str) -> bool {
-    //
-    // TODO
-    //
-    return false;
-}
-
 fn error_output(err: OrangeError) {
     match err {
         OrangeError::InitDirNotEmpty(e) => {
@@ -68,6 +71,17 @@ fn error_output(err: OrangeError) {
             println!("{}", e);
         }
     }
+}
+
+// CROP =========================================
+
+// INIT =========================================
+
+fn check_juice_name(_name: &str) -> bool {
+    //
+    // TODO
+    //
+    return false;
 }
 
 fn gen_juice(name: &str) {
@@ -96,3 +110,11 @@ fn gen_juice(name: &str) {
     //
     println!("\nDONE! You did it!\n");
 }
+
+// HARVEST ======================================
+
+// POUR =========================================
+
+// PRESS ========================================
+
+// REMOVE =======================================
