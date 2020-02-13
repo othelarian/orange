@@ -21,13 +21,21 @@ fn main() {
             .about("TODO check and download fruits, do also an update if necessary"))
         //
         .subcommand(SubCommand::with_name("pour")
-            .about("TODO serving the juice to your web browser")
+            .about("serving the juice to your web browser")
             //
+            /*
             .arg(Arg::with_name("env")
                 .short("e")
                 .long("env")
                 .value_name("ENV_FILE")
                 .help("load the given env file")
+                .takes_value(true))
+            */
+            .arg(Arg::with_name("port")
+                .short("p")
+                .long("port")
+                .value_name("PORT")
+                .help("select a specific port (4213 by default)")
                 .takes_value(true)))
         //
         .subcommand(SubCommand::with_name("press")
@@ -38,10 +46,11 @@ fn main() {
                 .long("env")
                 .value_name("ENV_FILE")
                 .help("load the given env file")
+                .number_of_values(1)
                 .takes_value(true)))
         //
-        .subcommand(SubCommand::with_name("remove")
-            .about("TODO remove a given fruit from the juice"))
+        .subcommand(SubCommand::with_name("dilute")
+            .about("TODO dilute your juice to remove some bad taste"))
         //
         .get_matches();
     //
@@ -49,7 +58,7 @@ fn main() {
         ("crop", _) => println!("call add (TODO)"),
         ("init", Some(sub_a)) => init(sub_a),
         ("harvest", _) => println!("call prepare (TODO)"),
-        ("pour", Some(sub_a)) => { pour(sub_a); },
+        ("pour", Some(sub_a)) => pour(sub_a),
         ("press", Some(sub_a)) => press(sub_a),
         ("remove", _) => println!("call remove (TODO)"),
         _ => {

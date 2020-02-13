@@ -7,17 +7,4 @@ edition = "2018"
 [dependencies]
 clap = "2.33.0"
 #directories = "2.0.2"
-
-#hyper => NO (use future)
-#chilli => NO (use hyper)
-#pen => NO (use hyper)
-#blink => NO (use hyper)
-#rotor => NO (abandoned)
-#chiisai => NO (use hyper)
-#rustless => NO (use hyper)
-#sincere => NO (use hyper)
-
-#rouille => WIP
-#micro_http_server => OK
-
 micro_http_server = "0.0.3"

@@ -4,7 +4,9 @@ use clap::ArgMatches;
 use micro_http_server::MicroHTTP;
 use std::env;
 use std::fs::{self, File};
-use std::io::Write;
+use std::io::{self, Write};
+use std::path::Path;
+use std::{thread, time};
 
 // PUBLIC ZONE ######################################################
 
@@ -32,19 +34,74 @@ pub fn init(args: &ArgMatches) {
     }
 }
 
-pub fn pour(_args: &ArgMatches) {
-    //
-    println!("trying to serve (TODO)");
-    //
-    let addr = "127.0.0.1:4213";
-    //
-    let _server = MicroHTTP::new(addr.into())
+pub fn pour(args: &ArgMatches) {
+    let port = if args.is_present("port") {
+        match args.value_of("port").unwrap().parse::<u32>() {
+            Ok(v) => v,
+            Err(_) => {
+                println!("Please specify a real port for the server");
+                return;
+            }
+        }
+    } else { 4213 };
+    let addr = &format!("127.0.0.1:{}", port);
+    let server = MicroHTTP::new(addr)
         .expect("Impossible to find a glass to pour in");
-    //
     println!("Pouring on {}", addr);
+    thread::spawn(move || loop {
+        let res = server.next_client();
+        if res.is_err() {
+            println!("Server failed: {:?}", res);
+            break;
+        }
+        match res.unwrap() {
+            None => thread::sleep(time::Duration::from_millis(200)),
+            Some(mut client) => {
+                if client.request().is_none() {
+                    client.respond("400", "No request :(".as_bytes(), &vec!()).unwrap_err();
+                } else {
+                    let req_copy = client.request().as_ref().unwrap();
+                    let url_split: Vec<&str> = req_copy.split('?').collect();
+                    let sending = match url_split.get(0) {
+                        Some(path) => match path {
+                            &"/" => {
+                                //
+                                // TODO : create a home page
+                                //
+                                // TODO : list the files inside the directory
+                                //
+                                client.respond_ok("WIP".as_bytes())
+                                //
+                            }
+                            //
+                            //
+                            &"/logo" => {
+                                //
+                                if let Ok(logo) = fs::read_to_string(Path::new("./resources/logo/logo.svg")) {
+                                    client.respond("200 OK", logo.as_bytes(), &vec!(String::from("Content-Type: image/svg+xml")))
+                                } else {
+                                    client.respond("500 Server Error", "Error delivering juice".as_bytes(), &vec!())
+                                }
+                                //
+                                //
+                            }
+                            //
+                            //
+                            //
+                            _ => client.respond("404 Not Found", "No juice found".as_bytes(), &vec!())
+                        }
+                        None => client.respond("404 Not Found", "No juice found".as_bytes(), &vec!())
+                    };
+                    sending.expect("Couldn't deliver some juice");
+                }
+            }
+        }
+    });
     //
-    //let _conn =
+    // TODO : launch the watcher here
     //
+    let mut w = String::new();
+    io::stdin().read_line(&mut w).unwrap();
 }
 
 pub fn press(_args: &ArgMatches) {
