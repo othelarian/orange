@@ -12,6 +12,9 @@ fn main() {
         .subcommand(SubCommand::with_name("crop")
             .about("TODO add a fruit to the juice"))
         //
+        .subcommand(SubCommand::with_name("dilute")
+            .about("TODO dilute your juice to remove some bad taste"))
+        //
         .subcommand(SubCommand::with_name("init")
             .about("initialize a directory to become a new juice")
             .arg(Arg::with_name("JUICE_NAME")
@@ -49,18 +52,15 @@ fn main() {
                 .number_of_values(1)
                 .takes_value(true)))
         //
-        .subcommand(SubCommand::with_name("dilute")
-            .about("TODO dilute your juice to remove some bad taste"))
-        //
         .get_matches();
     //
     match matches.subcommand() {
         ("crop", _) => println!("call add (TODO)"),
+        ("dilute", _) => println!("call remove (TODO)"),
         ("init", Some(sub_a)) => init(sub_a),
         ("harvest", _) => println!("call prepare (TODO)"),
         ("pour", Some(sub_a)) => pour(sub_a),
         ("press", Some(sub_a)) => press(sub_a),
-        ("remove", _) => println!("call remove (TODO)"),
         _ => {
             println!("---------------------------------------------------------------");
             println!("Welcome to orange CLI! Please use --help to see what you can do");
